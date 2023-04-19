@@ -1,0 +1,30 @@
+import requests
+
+
+url = "https://ws.api.video/auth/api-key"
+
+payload = {"apiKey": "your api key here"}
+headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+}
+
+response = requests.request("POST", url, json=payload, headers=headers)
+response = response.json()
+token = response.get("refresh_token")
+print(token)
+
+# Code sample for when your access token expires and you want to use your 
+# refresh token to get a new access token. 
+
+url = "https://ws.api.video/auth/refresh"
+
+payload = {"refreshToken": token}
+headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+}
+
+response = requests.request("POST", url, json=payload, headers=headers)
+response = response.json()
+print(response)
